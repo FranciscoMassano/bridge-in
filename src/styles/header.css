@@ -1,0 +1,18 @@
+.main-header {
+    background-color: #ffffff;
+    color: #ff0000;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 10vh;
+}
+
+.company-logo {
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.challenge-tagline {
+    font-style: italic;
+    margin: 0px;
+}
