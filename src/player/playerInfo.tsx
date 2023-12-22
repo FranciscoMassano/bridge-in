@@ -6,8 +6,15 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../styles/playerInfo.css';
 
 
-const PlayerList = () => {
+export const PlayerInfo: React.FC<{ teamId: number }> = ({ teamId }) => {
   const [players, setPlayers] = useState<any>([]);
+
+  const positionMap: { [key: string]: string } = {
+    C: 'Central',
+    G: 'Guard',
+    F: 'Forward',
+    '': 'N/A'
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +24,7 @@ const PlayerList = () => {
         params: {
           page: '0',
           per_page: '25',
+          team_id: teamId
         },
         headers: {
           'X-RapidAPI-Key': '73d402b351msh8faee717dec24cfp1f4e49jsn1bdd24a1b8af',
@@ -33,58 +41,15 @@ const PlayerList = () => {
     };
 
     fetchData();
-  }, []);
+  }, [teamId]);
 
   return (
-    <div className="accordion-container">
-      <div className="accordion">
-        <div className="accordion-item">
-          <h2 className="accordion-header" id="playerListHeader">
-            <div
-              className="accordion-button"
-              data-bs-toggle="collapse"
-              data-bs-target="#playerListCollapse"
-              aria-expanded="true"
-              aria-controls="playerListCollapse"
-            >
-              Player List
-            </div>
-          </h2>
-          <div
-            id="playerListCollapse"
-            className="accordion-collapse collapse show"
-            aria-labelledby="playerListHeader"
-            data-bs-parent="#accordion"
-          >
-            <div className="accordion-body">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Height</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {players.map((player: any) => (
-                    <tr key={player.id}>
-                      <td>{player.first_name}</td>
-                      <td>{player.last_name}</td>
-                      <td>
-                        {player.height_feet !== null && player.height_inches !== null
-                          ? `${player.height_feet}'${player.height_inches}"`
-                          : 'N/A'}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ul>
+      {players.map((player: any) => (
+        <li style={{ listStyleType: 'none', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }} key={player.id}>
+          {player.first_name} {player.last_name} - {positionMap[player.position]}
+        </li>
+      ))}
+    </ul>
   );
 };
-
-export default PlayerList;

@@ -1,6 +1,7 @@
 body {
     scrollbar-width: none;
     min-height: 100vh;
+    user-select: none;
 }
 
 .main {

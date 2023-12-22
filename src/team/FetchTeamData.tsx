@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-interface TeamsFetcherProps {
-  render: (teams: any[]) => React.ReactNode;
-}
-const TeamsFetcher: React.FC<TeamsFetcherProps> = ({ render }) => {
-  const [teams, setTeams] = useState([]);
+
+export const FetchTeamsData: React.FC<any> = ({ render }) => {
+  const [teams, setTeams] = useState<any>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +25,7 @@ const TeamsFetcher: React.FC<TeamsFetcherProps> = ({ render }) => {
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+  }, []);
 
   return render(teams);
 };
-
-export default TeamsFetcher;
