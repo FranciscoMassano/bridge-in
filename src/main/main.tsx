@@ -26,7 +26,6 @@ function Main() {
         <div className="card mx-5 mb-5">
           <div className="card-header">Challenge Nº2 - Show team roster</div>
           <div className="card-body">
-            <RosterSearch onSelectTeam={handleSelectTeam} />
           </div>
         </div>
 
