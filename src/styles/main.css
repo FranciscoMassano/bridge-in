@@ -11,19 +11,49 @@ body {
 
 }
 
-.challange-container {
+.nav-tabs {
     display: flex;
+    justify-content: space-evenly;
+    width: 100% !important;
 }
 
+.nav-item {
+    flex: 1;
+    border-radius: 0 0 0 0 !important;
+    border: none !important;
+    padding: 0;
+    margin: 0;
+}
 
+.nav-link {
+    flex: 1;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #ff0000 !important;
+    color: #ffffff !important;
+    border: 1px solid #dee2e6 !important;
+}
+
+.nav-link.active {
+    background-color: #770101 !important;
+}
+
+.tab-content {
+    width: 100%;
+    padding: 20px;
+}
+
+.card {
+    max-width: fit-content;
+    margin-top: 5vh !important;
+    padding: 0 !important;
+}
 
 .card-header {
     background-color: #ff0000 !important;
-    color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: bold;
     border: 1px solid #ff0000 !important;
     border-radius: 8px 8px 0 0 !important;
+    height: 1.5rem;
 }
 
 .card-body {
@@ -31,5 +61,4 @@ body {
     border: 1px solid #ff0000 !important;
     font-size: 1.3rem;
     border-radius: 0 0 8px 8px !important;
-
 }

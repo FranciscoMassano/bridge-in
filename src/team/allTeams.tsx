@@ -1,17 +1,18 @@
 // Import statement correction
 import { FetchTeams } from './FetchTeams';
+import '../styles/allTeams.css';
 
 export const AllTeams = () => {
   const renderTeams = (teams: any) => {
     const teamsByDivision: { [key: string]: any[] } = {};
 
     teams.forEach((team: any) => {
-      const division = team.division || 'No Division';
+      const division = team.division || 'No';
       teamsByDivision[division] = [...(teamsByDivision[division] || []), team];
     });
 
     return (
-      <div className="teams-list-container">
+      <div className="teams-list-container d-flex">
         {Object.entries(teamsByDivision).map(([division, divisionTeams]) => (
           <div className="team-list" key={division}>
             <h2>{division} Division</h2>
@@ -30,9 +31,7 @@ export const AllTeams = () => {
 
   return (
     <div className="teams-list-container">
-      <div className="team-list">
-        <FetchTeams render={renderTeams} />
-      </div>
+      <FetchTeams render={renderTeams} />
     </div>
   );
 };
