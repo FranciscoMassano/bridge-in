@@ -6,6 +6,7 @@
     flex: 1;
     margin: 10px;
     min-width: 10vw;
+    padding-left: 10px;
 }
 
 .team-li {
