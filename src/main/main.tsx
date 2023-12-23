@@ -1,16 +1,11 @@
 import { Header } from "../header/Header";
 import '../styles/main.css';
-import { RosterSearch } from "../team/RosterSearch";
 import { AllTeams } from "../team/AllTeams";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function Main() {
-
-  const handleSelectTeam = (teamId: number) => {
-    console.log('Selected Team ID:', teamId);
-  };
 
   return (
     <div className="main d-flex flex-wrap">
