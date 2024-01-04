@@ -1,34 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/fetchPlayers.css';
 
-
-export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: any[]) => void }> = ({ teamId, setAllPlayers }) => {
+export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player: any) => void }> = ({ teamId, savePlayerForStats }) => {
   const [players, setPlayers] = useState<any>([]);
+  const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      /**
-       *       
-        Use the code below to use the paid version of the API. 
-
-        const data = await axios.request(
-          {
-            method: 'GET',
-            url: 'https://free-nba.p.rapidapi.com/players',
-            params: {
-              page: '0',
-              per_page: '25',
-            },
-            headers: {
-              'X-RapidAPI-Key': 'your-key',
-              'X-RapidAPI-Host': 'your-paid-host',
-            },
-          });
-
-          const totalPages = data.data.meta.total_pages;
-       */
-
       const totalPages = 29;
       let allPlayers: any[] = [];
 
@@ -53,18 +31,45 @@ export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: a
         }
       }
       setPlayers(allPlayers);
-      console.log('All Players Data:', allPlayers);
     };
 
     fetchData();
   }, [teamId]);
+
+  const handlePlayerSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const playerId = parseInt(event.target.value, 10);
+    setSelectedPlayer(playerId);
+    savePlayerForStats(playerId);
+  };
+
   return (
     <div>
-      <ul className='player-list'>
-        {players.map((player: any) => (
-          <li className='player-list' key={player.id}>{player.first_name} {player.last_name} </li>
-        ))}
-      </ul>
+      {!selectedPlayer && (
+        <h4>Select a Player:</h4>
+      )}
+
+      {!selectedPlayer && (
+        <select
+          className="form-select"
+          value={selectedPlayer || ''}
+          onChange={handlePlayerSelection}
+        >
+          <option value="" disabled>
+            Select a player
+          </option>
+          {players.map((player: any) => (
+            <option key={player.id} value={player.id}>
+              {player.first_name} {player.last_name}
+            </option>
+          ))}
+        </select>
+      )}
+
+      {selectedPlayer && (
+        <p>
+          {selectedPlayer}
+        </p>
+      )}
     </div>
   );
 };

@@ -7,12 +7,16 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { RosterSearch } from "../team/RosterSearch";
 import { FetchPlayers } from "../player/FetchPlayers";
 import { ListTeams } from "../team/ListTeams";
+import { ListPlayers } from "../player/ListPlayers";
+import { FetchPlayerStats } from "../player/FetchPlayerStats";
 
 function Main() {
   const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
   const [statsTeamId, setStatsTeamId] = useState<number | null>(null);
-
+  const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null);
+
+  const [showPlayerDropdown, setPlayerDropdownVisible] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("Selected Team ID in Roster:", rosterTeamId);
@@ -33,6 +37,11 @@ function Main() {
   const saveAllPlayers = (players: any) => {
     setAllPlayers(players);
     console.log("All Players Data:", players);
+  };
+
+  const savePlayerForStats = (player: any) => {
+    setStatsPlayerId(player);
+    console.log(`Selected Player ID: ${player}`);
   };
 
   return (
@@ -88,6 +97,8 @@ function Main() {
             <div className="card-header"></div>
             <div className="card-body">
               <ListTeams onSelectTeam={handleSelectStatsTeam} />
+              {statsTeamId && <ListPlayers teamId={statsTeamId} savePlayerForStats={savePlayerForStats} />}
+              {statsPlayerId && <FetchPlayerStats playerId={statsPlayerId} />}
             </div>
           </div>
         </div>
