@@ -16,16 +16,6 @@ function Main() {
   const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null);
 
-  const [showPlayerDropdown, setPlayerDropdownVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log("Selected Team ID in Roster:", rosterTeamId);
-  }, [rosterTeamId]);
-
-  useEffect(() => {
-    console.log("Selected Team ID in Stats:", statsTeamId);
-  }, [statsTeamId]);
-
   const handleSelectRosterTeam = (teamId: number) => {
     setRosterTeamId(teamId);
   };
@@ -36,12 +26,10 @@ function Main() {
 
   const saveAllPlayers = (players: any) => {
     setAllPlayers(players);
-    console.log("All Players Data:", players);
   };
 
   const savePlayerForStats = (player: any) => {
     setStatsPlayerId(player);
-    console.log(`Selected Player ID: ${player}`);
   };
 
   return (

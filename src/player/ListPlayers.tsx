@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player: any) => void }> = ({ teamId, savePlayerForStats }) => {
   const [players, setPlayers] = useState<any>([]);

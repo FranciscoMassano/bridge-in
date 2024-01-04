@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FetchTeams } from './FetchTeams';
 import '../styles/rosterSearch.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export const RosterSearch: React.FC<any> = ({ onSelectTeam }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');

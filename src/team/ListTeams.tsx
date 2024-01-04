@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FetchTeams } from './FetchTeams';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export const ListTeams: React.FC<{ onSelectTeam: (teamId: number) => void }> = ({ onSelectTeam }) => {
   const [selectedTeamId, setSelectedTeamId] = useState<number | null>(null);

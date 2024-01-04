@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/fetchPlayers.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: any[]) => void }> = ({ teamId, setAllPlayers }) => {
   const [players, setPlayers] = useState<any>([]);
@@ -53,7 +54,6 @@ export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: a
         }
       }
       setPlayers(allPlayers);
-      console.log('All Players Data:', allPlayers);
     };
 
     fetchData();
