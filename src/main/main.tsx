@@ -6,17 +6,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { RosterSearch } from "../team/RosterSearch";
 import { FetchPlayers } from "../player/FetchPlayers";
+import { ListTeams } from "../team/ListTeams";
 
 function Main() {
   const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
+  const [statsTeamId, setStatsTeamId] = useState<number | null>(null);
+
   const [allPlayers, setAllPlayers] = useState<any>(null);
 
   useEffect(() => {
     console.log("Selected Team ID in Roster:", rosterTeamId);
   }, [rosterTeamId]);
 
+  useEffect(() => {
+    console.log("Selected Team ID in Stats:", statsTeamId);
+  }, [statsTeamId]);
+
   const handleSelectRosterTeam = (teamId: number) => {
     setRosterTeamId(teamId);
+  };
+
+  const handleSelectStatsTeam = (teamId: number) => {
+    setStatsTeamId(teamId);
   };
 
   const saveAllPlayers = (players: any) => {
@@ -39,7 +50,7 @@ function Main() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#roster">
+          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#stats">
             Show player stats
           </a>
         </li>
@@ -72,7 +83,14 @@ function Main() {
             </div>
           </div>
         </div>
-        {/* Add more tab panes as needed */}
+        <div className="tab-pane fade" id="stats">
+          <div className="card mx-5 mb-5">
+            <div className="card-header"></div>
+            <div className="card-body">
+              <ListTeams onSelectTeam={handleSelectStatsTeam} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
