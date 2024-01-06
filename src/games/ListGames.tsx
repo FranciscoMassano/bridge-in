@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TotalPagesReadFromAPI } from '../main/Main';
-import '../styles/fetchGames.css';
-import FormatDate from '../helpers/FormatDate';
 
-export const FetchGames: React.FC<{ teamId: number | null }> = ({ teamId }) => {
+interface ListGamesProps {
+  onSelectGame: (gameId: number) => void;
+}
+
+export const ListGames: React.FC<{ teamId: number | null, onSelectGame: (gameId: number) => void }> = ({ onSelectGame, teamId }) => {
   const [games, setGames] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -43,22 +46,31 @@ export const FetchGames: React.FC<{ teamId: number | null }> = ({ teamId }) => {
     fetchGames();
   }, [teamId]);
 
+  const handleGameSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const gameId = parseInt(event.target.value);
+    setSelectedGameId(gameId);
+    onSelectGame(gameId);
+  };
+
   return (
     <div>
       {loading && <p>Loading games...</p>}
-      {!loading && games.length === 0 && <p>No games available for this team.</p>}
+      {!loading && games.length === 0 && <p>No games available.</p>}
       {!loading && games.length > 0 && (
-        <ul className='game-list'>
+        <select
+          className="form-select"
+          value={selectedGameId || ''}
+          onChange={handleGameSelection}
+        >
+          <option value="" disabled>
+            Select a game
+          </option>
           {games.map((game) => (
-            <li key={game.id}>
-              <h3 className='game-list-item'> Season: {game.season} </h3>
-              <p className='game-list-item'>{FormatDate(game.date)}</p>
-              {game.postseason && <p className='game-list-item'>Post Season</p>}
-              {!game.postseason && <p className='game-list-item'>Regular Season</p>}
-              <p>{game.home_team.full_name} {game.home_team_score} vs {game.visitor_team_score} {game.visitor_team.full_name}</p>
-            </li>
+            <option key={game.id} value={game.id}>
+              {`${game.home_team.full_name} vs ${game.visitor_team.full_name}`}
+            </option>
           ))}
-        </ul>
+        </select>
       )}
     </div>
   );

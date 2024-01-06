@@ -10,6 +10,8 @@ import { ListTeams } from "../team/ListTeams";
 import { ListPlayers } from "../player/ListPlayers";
 import { FetchPlayerStats } from "../player/FetchPlayerStats";
 import { FetchGames } from "../games/FetchGames";
+import { ListGames } from "../games/ListGames";
+import { FetchSingleGame } from "../games/FetchSingleGame";
 
 function Main() {
   const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
@@ -18,10 +20,12 @@ function Main() {
   const [statsGamesId, setStatsGamesId] = useState<number | null>(null);
   const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null);
+  const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
+
 
   useEffect(() => {
-    console.log(statsGamesId)
-  }, [statsGamesId])
+    console.log(selectedGameId)
+  }, [selectedGameId])
 
   const handleSelectRosterTeam = (teamId: number) => {
     setRosterTeamId(teamId);
@@ -41,6 +45,10 @@ function Main() {
 
   const savePlayerForStats = (player: any) => {
     setStatsPlayerId(player);
+  };
+
+  const handleSelectGame = (gameId: number) => {
+    setSelectedGameId(gameId);
   };
 
   return (
@@ -68,7 +76,7 @@ function Main() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#roster">
+          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#gamestats">
             Show stats from game
           </a>
         </li>
@@ -106,7 +114,17 @@ function Main() {
             <div className="card-header"></div>
             <div className="card-body">
               <ListTeams onSelectTeam={handleSelectGamesTeam} />
-              {statsGamesId && <FetchGames teamId={statsGamesId} teamName="" />}
+              {statsGamesId && <FetchGames teamId={statsGamesId} />}
+            </div>
+          </div>
+        </div>
+        <div className="tab-pane fade" id="gamestats">
+          <div className="card mx-5 mb-5">
+            <div className="card-header"></div>
+            <div className="card-body">
+              <ListTeams onSelectTeam={handleSelectGamesTeam} />
+              {!selectedGameId && statsGamesId && <ListGames teamId={statsGamesId} onSelectGame={handleSelectGame} />}
+              {selectedGameId && <FetchSingleGame selectedGameId={selectedGameId} />}
             </div>
           </div>
         </div>
