@@ -6,22 +6,30 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { RosterSearch } from "../team/RosterSearch";
 import { FetchPlayers } from "../player/FetchPlayers";
+import { ListTeams } from "../team/ListTeams";
+import { ListPlayers } from "../player/ListPlayers";
+import { FetchPlayerStats } from "../player/FetchPlayerStats";
 
 function Main() {
   const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
+  const [statsTeamId, setStatsTeamId] = useState<number | null>(null);
+  const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null);
-
-  useEffect(() => {
-    console.log("Selected Team ID in Roster:", rosterTeamId);
-  }, [rosterTeamId]);
 
   const handleSelectRosterTeam = (teamId: number) => {
     setRosterTeamId(teamId);
   };
 
+  const handleSelectStatsTeam = (teamId: number) => {
+    setStatsTeamId(teamId);
+  };
+
   const saveAllPlayers = (players: any) => {
     setAllPlayers(players);
-    console.log("All Players Data:", players);
+  };
+
+  const savePlayerForStats = (player: any) => {
+    setStatsPlayerId(player);
   };
 
   return (
@@ -39,7 +47,7 @@ function Main() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#roster">
+          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#stats">
             Show player stats
           </a>
         </li>
@@ -72,7 +80,16 @@ function Main() {
             </div>
           </div>
         </div>
-        {/* Add more tab panes as needed */}
+        <div className="tab-pane fade" id="stats">
+          <div className="card mx-5 mb-5">
+            <div className="card-header"></div>
+            <div className="card-body">
+              <ListTeams onSelectTeam={handleSelectStatsTeam} />
+              {statsTeamId && <ListPlayers teamId={statsTeamId} savePlayerForStats={savePlayerForStats} />}
+              {statsPlayerId && <FetchPlayerStats playerId={statsPlayerId} />}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/fetchPlayers.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: any[]) => void }> = ({ teamId, setAllPlayers }) => {
   const [players, setPlayers] = useState<any>([]);
@@ -29,8 +30,9 @@ export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: a
           const totalPages = data.data.meta.total_pages;
        */
 
-      const totalPages = 29;
+      const totalPages = 10;
       let allPlayers: any[] = [];
+      let uniquePlayerIds = new Set();
 
       for (let page = 0; page <= totalPages; page++) {
         const response = await axios.request({
@@ -47,17 +49,22 @@ export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: a
         });
 
         const playersInTeam = response.data.data.filter((player: any) => player.team.id === teamId);
-        allPlayers = [...allPlayers, ...playersInTeam];
-        if (page % 2 === 0) {
-          await new Promise(resolve => setTimeout(resolve, 100));
-        }
+        // allPlayers = [...allPlayers, ...playersInTeam];
+        playersInTeam.forEach((player: any) => {
+          if (!uniquePlayerIds.has(player.id)) {
+            allPlayers.push(player);
+            uniquePlayerIds.add(player.id);
+          }
+        });
+        // if (page % 2 === 0) {
+        //   await new Promise(resolve => setTimeout(resolve, 100));
+        // }
       }
       setPlayers(allPlayers);
-      console.log('All Players Data:', allPlayers);
     };
 
     fetchData();
-  }, [teamId, setAllPlayers]);
+  }, [teamId]);
   return (
     <div>
       <ul className='player-list'>
