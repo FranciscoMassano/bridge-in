@@ -9,12 +9,19 @@ import { FetchPlayers } from "../player/FetchPlayers";
 import { ListTeams } from "../team/ListTeams";
 import { ListPlayers } from "../player/ListPlayers";
 import { FetchPlayerStats } from "../player/FetchPlayerStats";
+import { FetchGames } from "../games/FetchGames";
 
 function Main() {
   const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
   const [statsTeamId, setStatsTeamId] = useState<number | null>(null);
+  const [statsTeamName, setStatsTeamName] = useState<string | null>(null);
+  const [statsGamesId, setStatsGamesId] = useState<number | null>(null);
   const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null);
+
+  useEffect(() => {
+    console.log(statsGamesId)
+  }, [statsGamesId])
 
   const handleSelectRosterTeam = (teamId: number) => {
     setRosterTeamId(teamId);
@@ -22,6 +29,10 @@ function Main() {
 
   const handleSelectStatsTeam = (teamId: number) => {
     setStatsTeamId(teamId);
+  };
+
+  const handleSelectGamesTeam = (teamId: number) => {
+    setStatsGamesId(teamId);
   };
 
   const saveAllPlayers = (players: any) => {
@@ -52,13 +63,13 @@ function Main() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#roster">
+          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#games">
             List games from team
           </a>
         </li>
         <li className="nav-item">
           <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#roster">
-            Show stats
+            Show stats from game
           </a>
         </li>
       </ul>
@@ -90,9 +101,19 @@ function Main() {
             </div>
           </div>
         </div>
+        <div className="tab-pane fade" id="games">
+          <div className="card mx-5 mb-5">
+            <div className="card-header"></div>
+            <div className="card-body">
+              <ListTeams onSelectTeam={handleSelectGamesTeam} />
+              {statsGamesId && <FetchGames teamId={statsGamesId} teamName="" />}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default Main;
+export const TotalPagesReadFromAPI = 10;
