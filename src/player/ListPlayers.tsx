@@ -9,7 +9,7 @@ export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player
 
   useEffect(() => {
     const fetchData = async () => {
-      const totalPages = 29;
+      const totalPages = 10;
       let allPlayers: any[] = [];
 
       for (let page = 0; page <= totalPages; page++) {
@@ -65,12 +65,6 @@ export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player
             </option>
           ))}
         </select>
-      )}
-
-      {selectedPlayer && (
-        <p>
-          {selectedPlayer}
-        </p>
       )}
     </div>
   );

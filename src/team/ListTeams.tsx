@@ -37,7 +37,7 @@ export const ListTeams: React.FC<{ onSelectTeam: (teamId: number) => void }> = (
           );
         }}
       />}
-      {selectedTeamId && <p>{teams.find((team) => team.id === selectedTeamId)?.full_name}</p>}
+
     </div>
   );
 };
