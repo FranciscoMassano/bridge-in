@@ -9,12 +9,17 @@ import { FetchPlayers } from "../player/FetchPlayers";
 import { ListTeams } from "../team/ListTeams";
 import { ListPlayers } from "../player/ListPlayers";
 import { FetchPlayerStats } from "../player/FetchPlayerStats";
+import { FetchGames } from "../games/FetchGames";
+import { ListGames } from "../games/ListGames";
+import { FetchSingleGame } from "../games/FetchSingleGame";
 
 function Main() {
   const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
   const [statsTeamId, setStatsTeamId] = useState<number | null>(null);
+  const [statsGamesId, setStatsGamesId] = useState<number | null>(null);
   const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null);
+  const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
 
   const handleSelectRosterTeam = (teamId: number) => {
     setRosterTeamId(teamId);
@@ -24,12 +29,20 @@ function Main() {
     setStatsTeamId(teamId);
   };
 
+  const handleSelectGamesTeam = (teamId: number) => {
+    setStatsGamesId(teamId);
+  };
+
   const saveAllPlayers = (players: any) => {
     setAllPlayers(players);
   };
 
   const savePlayerForStats = (player: any) => {
     setStatsPlayerId(player);
+  };
+
+  const handleSelectGame = (gameId: number) => {
+    setSelectedGameId(gameId);
   };
 
   return (
@@ -52,13 +65,13 @@ function Main() {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#roster">
+          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#games">
             List games from team
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#roster">
-            Show stats
+          <a className="nav-link" id="roster-tab" data-bs-toggle="tab" href="#gamestats">
+            Show stats from game
           </a>
         </li>
       </ul>
@@ -87,6 +100,25 @@ function Main() {
               <ListTeams onSelectTeam={handleSelectStatsTeam} />
               {statsTeamId && <ListPlayers teamId={statsTeamId} savePlayerForStats={savePlayerForStats} />}
               {statsPlayerId && <FetchPlayerStats playerId={statsPlayerId} />}
+            </div>
+          </div>
+        </div>
+        <div className="tab-pane fade" id="games">
+          <div className="card mx-5 mb-5">
+            <div className="card-header"></div>
+            <div className="card-body">
+              <ListTeams onSelectTeam={handleSelectGamesTeam} />
+              {statsGamesId && <FetchGames teamId={statsGamesId} />}
+            </div>
+          </div>
+        </div>
+        <div className="tab-pane fade" id="gamestats">
+          <div className="card mx-5 mb-5">
+            <div className="card-header"></div>
+            <div className="card-body">
+              <ListTeams onSelectTeam={handleSelectGamesTeam} />
+              {!selectedGameId && statsGamesId && <ListGames teamId={statsGamesId} onSelectGame={handleSelectGame} />}
+              {selectedGameId && <FetchSingleGame selectedGameId={selectedGameId} />}
             </div>
           </div>
         </div>

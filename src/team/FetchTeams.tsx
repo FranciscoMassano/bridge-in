@@ -8,6 +8,9 @@ export const FetchTeams: React.FC<any> = ({ render }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      let allTeams: any[] = [];
+      let currentPage = 1;
+      let totalPages = 0;
       const options = {
         method: 'GET',
         url: 'https://free-nba.p.rapidapi.com/teams',
@@ -19,10 +22,6 @@ export const FetchTeams: React.FC<any> = ({ render }) => {
       };
 
       try {
-        let allTeams: any[] = [];
-        let currentPage = 1;
-        let totalPages = 2;
-
         do {
           const response = await axios.request({
             ...options,

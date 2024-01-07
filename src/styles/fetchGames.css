@@ -1,0 +1,14 @@
+.game-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.game-list li {
+    margin-bottom: 30px;
+}
+
+.game-list-item {
+    padding: 0;
+    line-height: 0.7;
+}
