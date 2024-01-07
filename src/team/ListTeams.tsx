@@ -15,7 +15,6 @@ export const ListTeams: React.FC<{ onSelectTeam: (teamId: number) => void }> = (
 
   return (
     <div>
-      {!selectedTeamId && <h4>Select a Team:</h4>}
       {!selectedTeamId && <FetchTeams
         render={(teamsData: any[]) => {
           setTeams(teamsData);

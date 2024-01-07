@@ -41,24 +41,25 @@ body {
 .tab-content {
     width: 100%;
     padding: 20px;
+    background-color: #dee2e6 !important;
+    min-height: 74vh !important;
 }
 
-.card {
-    max-width: fit-content;
-    margin-top: 5vh !important;
-    padding: 0 !important;
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
 }
 
-.card-header {
-    background-color: #ff0000 !important;
-    border: 1px solid #ff0000 !important;
-    border-radius: 8px 8px 0 0 !important;
-    height: 1.5rem;
+.card-title {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-.card-body {
-    background-color: #e6e6e6;
-    border: 1px solid #ff0000 !important;
-    font-size: 1.3rem;
-    border-radius: 0 0 8px 8px !important;
+.card-description {
+    font-size: 18px;
+    margin-bottom: 20px;
 }

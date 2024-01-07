@@ -62,10 +62,6 @@ export const ListPlayers: React.FC<{ teamId: number; setPlayerID: (player: any) 
       {!loading && players.length === 0 && <p>No players available.</p>}
 
       {!selectedPlayer && !loading && players.length > 0 && (
-        <h4>Select a Player:</h4>
-      )}
-
-      {!selectedPlayer && !loading && players.length > 0 && (
         <select
           className="form-select"
           value={selectedPlayer || ''}
