@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TotalPagesReadFromAPI } from '../main/Main';
 import '../styles/fetchGames.css';
 import FormatDate from '../helpers/FormatDate';
+import { TotalPagesReadFromAPI } from '../helpers/constants';
 
 export const FetchGames: React.FC<{ teamId: number | null }> = ({ teamId }) => {
   const [games, setGames] = useState<any[]>([]);

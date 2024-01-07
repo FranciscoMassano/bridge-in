@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TotalPagesReadFromAPI } from '../main/Main';
+import { TotalPagesReadFromAPI } from '../helpers/constants';
 
 interface ListGamesProps {
   onSelectGame: (gameId: number) => void;

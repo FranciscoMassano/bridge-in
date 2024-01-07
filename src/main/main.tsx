@@ -16,16 +16,10 @@ import { FetchSingleGame } from "../games/FetchSingleGame";
 function Main() {
   const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
   const [statsTeamId, setStatsTeamId] = useState<number | null>(null);
-  const [statsTeamName, setStatsTeamName] = useState<string | null>(null);
   const [statsGamesId, setStatsGamesId] = useState<number | null>(null);
   const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null);
   const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
-
-
-  useEffect(() => {
-    console.log(selectedGameId)
-  }, [selectedGameId])
 
   const handleSelectRosterTeam = (teamId: number) => {
     setRosterTeamId(teamId);
@@ -134,4 +128,3 @@ function Main() {
 }
 
 export default Main;
-export const TotalPagesReadFromAPI = 10;

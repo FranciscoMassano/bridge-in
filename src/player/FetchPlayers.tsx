@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/fetchPlayers.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { TotalPagesReadFromAPI } from '../main/Main';
+import { TotalPagesReadFromAPI } from '../helpers/constants';
 
 export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: any[]) => void }> = ({ teamId, setAllPlayers }) => {
   const [players, setPlayers] = useState<any>([]);
