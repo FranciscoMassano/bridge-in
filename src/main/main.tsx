@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Header } from "../header/Header";
-import "../styles/main.css";
-import { AllTeams } from "../team/AllTeams";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "../styles/main.css";
+import { useState } from "react";
+import { Header } from "../header/Header";
+import { AllTeams } from "../team/AllTeams";
 import { RosterSearch } from "../team/RosterSearch";
 import { FetchPlayers } from "../player/FetchPlayers";
 import { ListTeams } from "../team/ListTeams";
@@ -14,35 +14,17 @@ import { ListGames } from "../games/ListGames";
 import { FetchSingleGame } from "../games/FetchSingleGame";
 
 function Main() {
-  const [rosterTeamId, setRosterTeamId] = useState<number | null>(null);
-  const [statsTeamId, setStatsTeamId] = useState<number | null>(null);
-  const [statsGamesId, setStatsGamesId] = useState<number | null>(null);
-  const [statsPlayerId, setStatsPlayerId] = useState<number | null>(null);
-  const [allPlayers, setAllPlayers] = useState<any>(null);
-  const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
-
-  const handleSelectRosterTeam = (teamId: number) => {
-    setRosterTeamId(teamId);
-  };
-
-  const handleSelectStatsTeam = (teamId: number) => {
-    setStatsTeamId(teamId);
-  };
-
-  const handleSelectGamesTeam = (teamId: number) => {
-    setStatsGamesId(teamId);
-  };
-
-  const saveAllPlayers = (players: any) => {
-    setAllPlayers(players);
-  };
-
-  const savePlayerForStats = (player: any) => {
-    setStatsPlayerId(player);
-  };
-
-  const handleSelectGame = (gameId: number) => {
-    setSelectedGameId(gameId);
+  const [selectedTeamID, setSelectedTeamID] = useState<number | null>(null);
+  const handleTeamSelection = (teamId: number) => {
+    setSelectedTeamID(teamId);
+  }
+  const [playerID, setPlayerId] = useState<number | null>(null);
+  const handlePlayerSelection = (playerId: number) => {
+    setPlayerId(playerId);
+  }
+  const [gameID, setGameID] = useState<number | null>(null);
+  const handleGameSelection = (gameId: number) => {
+    setGameID(gameId);
   };
 
   return (
@@ -88,8 +70,8 @@ function Main() {
           <div className="card mx-5 mb-5">
             <div className="card-header"></div>
             <div className="card-body">
-              <RosterSearch onSelectTeam={handleSelectRosterTeam} />
-              {rosterTeamId && <FetchPlayers teamId={rosterTeamId} setAllPlayers={saveAllPlayers} />}
+              <RosterSearch onSelectTeam={handleTeamSelection} />
+              {selectedTeamID && <FetchPlayers teamId={selectedTeamID} />}
             </div>
           </div>
         </div>
@@ -97,9 +79,9 @@ function Main() {
           <div className="card mx-5 mb-5">
             <div className="card-header"></div>
             <div className="card-body">
-              <ListTeams onSelectTeam={handleSelectStatsTeam} />
-              {statsTeamId && <ListPlayers teamId={statsTeamId} savePlayerForStats={savePlayerForStats} />}
-              {statsPlayerId && <FetchPlayerStats playerId={statsPlayerId} />}
+              <ListTeams onSelectTeam={handleTeamSelection} />
+              {selectedTeamID && <ListPlayers teamId={selectedTeamID} setPlayerID={handlePlayerSelection} />}
+              {playerID && <FetchPlayerStats playerId={playerID} />}
             </div>
           </div>
         </div>
@@ -107,8 +89,8 @@ function Main() {
           <div className="card mx-5 mb-5">
             <div className="card-header"></div>
             <div className="card-body">
-              <ListTeams onSelectTeam={handleSelectGamesTeam} />
-              {statsGamesId && <FetchGames teamId={statsGamesId} />}
+              <ListTeams onSelectTeam={handleTeamSelection} />
+              {selectedTeamID && <FetchGames teamId={selectedTeamID} />}
             </div>
           </div>
         </div>
@@ -116,9 +98,9 @@ function Main() {
           <div className="card mx-5 mb-5">
             <div className="card-header"></div>
             <div className="card-body">
-              <ListTeams onSelectTeam={handleSelectGamesTeam} />
-              {!selectedGameId && statsGamesId && <ListGames teamId={statsGamesId} onSelectGame={handleSelectGame} />}
-              {selectedGameId && <FetchSingleGame selectedGameId={selectedGameId} />}
+              <ListTeams onSelectTeam={handleTeamSelection} />
+              {!gameID && selectedTeamID && <ListGames teamId={selectedTeamID} onSelectGame={handleGameSelection} />}
+              {gameID && <FetchSingleGame selectedGameId={gameID} />}
             </div>
           </div>
         </div>

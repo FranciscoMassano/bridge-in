@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { TotalPagesReadFromAPI } from '../helpers/constants';
 
-export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player: any) => void }> = ({ teamId, savePlayerForStats }) => {
+export const ListPlayers: React.FC<{ teamId: number; setPlayerID: (player: any) => void }> = ({ teamId, setPlayerID }) => {
   const [players, setPlayers] = useState<any>([]);
-  const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -41,12 +41,10 @@ export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player
         }
         setPlayers(allPlayers);
       } catch (error) {
-
+        console.error(error);
       } finally {
         setLoading(false);
       }
-
-
     };
 
     fetchData();
@@ -54,8 +52,8 @@ export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player
 
   const handlePlayerSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const playerId = parseInt(event.target.value, 10);
-    setSelectedPlayer(playerId);
-    savePlayerForStats(playerId);
+    setSelectedPlayer(true);
+    setPlayerID(playerId);
   };
 
   return (
@@ -63,11 +61,11 @@ export const ListPlayers: React.FC<{ teamId: number; savePlayerForStats: (player
       {loading && <p>Loading players...</p>}
       {!loading && players.length === 0 && <p>No players available.</p>}
 
-      {!selectedPlayer && !loading && (
+      {!selectedPlayer && !loading && players.length > 0 && (
         <h4>Select a Player:</h4>
       )}
 
-      {!selectedPlayer && !loading && (
+      {!selectedPlayer && !loading && players.length > 0 && (
         <select
           className="form-select"
           value={selectedPlayer || ''}

@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { TotalPagesReadFromAPI } from '../helpers/constants';
 
-export const FetchPlayers: React.FC<{ teamId: number; setAllPlayers: (players: any[]) => void }> = ({ teamId, setAllPlayers }) => {
+export const FetchPlayers: React.FC<{ teamId: number }> = ({ teamId }) => {
   const [players, setPlayers] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
