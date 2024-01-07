@@ -13,6 +13,14 @@ import { FetchGames } from "../games/FetchGames";
 import { ListGames } from "../games/ListGames";
 import { FetchSingleGame } from "../games/FetchSingleGame";
 
+
+const renderCard = (children: React.ReactNode) => (
+  <div className="card mx-5 mb-5">
+    <div className="card-header"></div>
+    <div className="card-body">{children}</div>
+  </div>
+);
+
 function Main() {
   const [selectedTeamID, setSelectedTeamID] = useState<number | null>(null);
   const handleTeamSelection = (teamId: number) => {
@@ -26,7 +34,6 @@ function Main() {
   const handleGameSelection = (gameId: number) => {
     setGameID(gameId);
   };
-
   return (
     <div className="main d-flex flex-wrap">
       <Header />
@@ -59,54 +66,45 @@ function Main() {
       </ul>
       <div className="tab-content d-flex align-items-center justify-content-center">
         <div className="tab-pane fade show active" id="teams">
-          <div className="card mx-5 mb-5">
-            <div className="card-header"></div>
-            <div className="card-body">
-              <AllTeams />
-            </div>
-          </div>
+          {renderCard(<AllTeams />)}
         </div>
         <div className="tab-pane fade" id="roster">
-          <div className="card mx-5 mb-5">
-            <div className="card-header"></div>
-            <div className="card-body">
+          {renderCard(
+            <>
               <RosterSearch onSelectTeam={handleTeamSelection} />
               {selectedTeamID && <FetchPlayers teamId={selectedTeamID} />}
-            </div>
-          </div>
+            </>
+          )}
         </div>
         <div className="tab-pane fade" id="stats">
-          <div className="card mx-5 mb-5">
-            <div className="card-header"></div>
-            <div className="card-body">
+          {renderCard(
+            <>
               <ListTeams onSelectTeam={handleTeamSelection} />
               {selectedTeamID && <ListPlayers teamId={selectedTeamID} setPlayerID={handlePlayerSelection} />}
               {playerID && <FetchPlayerStats playerId={playerID} />}
-            </div>
-          </div>
+            </>
+          )}
         </div>
         <div className="tab-pane fade" id="games">
-          <div className="card mx-5 mb-5">
-            <div className="card-header"></div>
-            <div className="card-body">
+          {renderCard(
+            <>
               <ListTeams onSelectTeam={handleTeamSelection} />
               {selectedTeamID && <FetchGames teamId={selectedTeamID} />}
-            </div>
-          </div>
+            </>
+          )}
         </div>
         <div className="tab-pane fade" id="gamestats">
-          <div className="card mx-5 mb-5">
-            <div className="card-header"></div>
-            <div className="card-body">
+          {renderCard(
+            <>
               <ListTeams onSelectTeam={handleTeamSelection} />
               {!gameID && selectedTeamID && <ListGames teamId={selectedTeamID} onSelectGame={handleGameSelection} />}
               {gameID && <FetchSingleGame selectedGameId={gameID} />}
-            </div>
-          </div>
+            </>
+          )}
+
         </div>
       </div>
     </div>
   );
 }
-
 export default Main;
